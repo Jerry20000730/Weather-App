@@ -1,4 +1,4 @@
-# ece5904hw4
+# ReactNative (mobile client) & Express (server)
 
 
 
