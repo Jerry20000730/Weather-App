@@ -1,4 +1,4 @@
-# ece5904hw3
+# React (client) & Express (server) version
 
 ## Usage
 I have seperated the client and the server. To run the server, go to server folder and do
