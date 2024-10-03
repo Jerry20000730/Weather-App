@@ -15,7 +15,7 @@ To understand how one code can be run on different platform (web, mobile, etc.,)
 ### Path 1: HTML version - README link [here](HTML-version/README.md)
 HTML version focus on basic functionalities, the aim of the project is to let us get familiarize with the javascript, which will be an essential component afterwards.
 
-### Path 2: TypeScript version - README link [here][TS-version/README.md]
+### Path 2: TypeScript version - README link [here](TS-version/README.md)
 TypeScript is a superset of JavaScript, by using pure TypeScript, we can build the website just like using the pure HTML, but focus on type declaring. TypeScript version require to use `npm` to download additional packages.
 
 ### Path 3: React (client) and Express (server) version - README link [here](React-client-Express-server-version/README.md)
