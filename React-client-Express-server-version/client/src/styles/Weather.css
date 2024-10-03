@@ -1,0 +1,85 @@
+.weather-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 192px;
+    margin-bottom: 29px;
+}
+
+.weather-card-sun {
+    width: 215px;
+    height: 150px;
+    background-color: #a9cee7;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+}
+
+.weather-card-wind {
+    width: 215px;
+    height: 150px;
+    background-color: #a9cee7;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.weather-sun-line {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 23px;
+}
+
+.weather-sunrise-title .weather-sunrise-value .weather-sunset-title .weather-sunset-value {
+    color: #0c0c0c;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.weather-wind-title {
+    color: #0c0c0c;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 12px;
+}
+
+.weather-wind-value {
+    color: #0c0c0c;
+    font-family: Inter;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.weather-wind-unit {
+    color: #0c0c0c;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 12px;
+}
+
+.weather-wind-direction {
+    color: #0c0c0c;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}

@@ -1,0 +1,69 @@
+.date {
+    color: #0e0d0d;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.temp-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 18px;
+}
+
+.temp-class {
+    color: #0c0c0c;
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.temp-value {
+    color: #0c0c0c;
+    font-family: Inter;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.temp {
+    display: flex;
+    justify-content: center;
+    gap: 46px;
+}
+
+.weather-icon {
+    width: 32px;
+    height: 32px;
+    margin-top: 13px;
+}
+
+.forecast-card {
+    background-color: #C8D6DF;
+    width: 177px;
+    height: 168px;
+}
+
+.forecast-cards {
+    display: flex;
+    justify-content: center;
+    gap: 63px;
+    margin-top: 51px;
+}
+
+.forecast-title {
+    color: #0e0d0d;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 10px;
+}

@@ -1,0 +1,36 @@
+#root {
+  max-width: 802px;
+  max-height: 1014px;
+  margin: 0 auto;
+  text-align: center;
+  background: #d9d9d9;
+}
+
+.switch-metric {
+  width: 146px;
+  height: 40px;
+  background-color: #024878;
+  color: #FFFFFF;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  flex-shrink: 0;
+  margin-bottom: 50px;
+}
+
+.switch-metric:disabled {
+  width: 146px;
+  height: 40px;
+  background-color: #024878;
+  color: #888;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  flex-shrink: 0;
+  margin-bottom: 50px;
+  cursor: not-allowed;
+}

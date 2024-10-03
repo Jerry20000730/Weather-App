@@ -1,0 +1,87 @@
+.zipcode-container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 33px;
+    margin-bottom: 17px;
+    gap: 12px;
+}
+
+.zipcode-title {
+    color: #0c0c0c;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.zipcode-input {
+    width: 235px;
+    height: 35px;
+    border: 1px solid #000;
+    color: #ffffff;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding-left: 16px;
+    background-color: #024878;
+}
+
+.zipcode-button {
+    width: 146px;
+    height: 40px;
+    background-color: #024878;
+    color: #FFFFFF;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.zipcode-button:disabled {
+    width: 146px;
+    height: 40px;
+    background-color: #024878;
+    color: #888;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    cursor: not-allowed;
+}
+
+.temperature {
+    color: #0c0c0c;
+    font-family: Inter;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 5px;
+}
+
+.feel-temperature {
+    color: #0c0c0c;
+    font-family: Inter;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 6px;
+}
+
+.location {
+    color: #0c0c0c;
+    font-family: Inter;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 6px;
+}

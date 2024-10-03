@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast</title>
+    <style>
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        thead th {
+            border: 1px solid #000;
+            padding: 2px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        tbody th {
+            border: 1px solid #000;
+            text-align: center;
+            font-weight: lighter;
+            font-size: 12px;
+        }
+    </style>
+    <script>
+        let isFahrenheit = true;
+        let cachedData = null;
+        let cachedFavorites = null;
+
+        document.addEventListener("DOMContentLoaded", async function() {
+            try {
+                const data = await loadFavorites();
+                cachedFavorites = data;
+                if (!data || data.length === 0) {
+                    document.getElementById("favorite_list").innerHTML = `<option value="">No Favorites</option>`;
+                } else {
+                    document.getElementById("favorite_list").innerHTML = data.map(fav => `<option value="${fav.id}">${fav.location}</option>`).join('');
+                }
+            } catch (error) {
+                console.error("Error loading favorites: ", error);
+            }
+        });
+
+        async function loadFavorites() {
+            const rsp = await fetch("/favorites")
+            if (!rsp.ok) {
+                const data = await rsp.json()
+                alert("Favorites API failed, API error message: " + data.error.message)
+                throw new Error('Favorites API response was not 200, API error message: ' + data.error.message);
+            }
+            const data = await rsp.json();
+            return data
+        }
+
+        async function onGetForcastClicked() {
+            const zipCode = document.getElementById('zip_code').value;
+            if (!validateZipCode(zipCode)) {
+                alert("Invalid Zip Code")
+            } else {
+                try {
+                    const data = await fetchWeatherData(zipCode);
+                    cachedData = data;
+                    updateWeatherTable(data);
+                } catch (error) {
+                    console.error("Error fetching weather data: ", error);
+                }
+            }
+        }
+
+        async function fetchWeatherData(zipCode) {
+            const rsp = await fetch("http://api.weatherapi.com/v1/forecast.json?key=65ef1295a13048b5ae4144239243008&q="+zipCode+"&days=3&aqi=no&alerts=no")
+            if (!rsp.ok) {
+                const data = await rsp.json()
+                alert("Weather API failed, API error message: " + data.error.message)
+                throw new Error('Weather API response was not 200, API error message: ' + data.error.message);
+            }
+            const data = await rsp.json();
+            return data
+        }
+
+        async function addToFavorites() {
+            const zipCode = document.getElementById('zip_code').value;
+            try {
+                const rsp = await fetch('/favorites', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ zip: zipCode, location: cachedData.location.name + ", " + cachedData.location.region })
+                });
+                if (!rsp.ok) {
+                    const data = await rsp.json()
+                    alert("Favorites API failed, API error message: " + data.error.message)
+                    throw new Error('Favorites API response was not 200, API error message: ' + data.error.message);
+                } else {
+                    const data = await loadFavorites();
+                    cachedFavorites = data;
+                    updateFavoritesDropdown(data);
+                    updateFavoritesUI(data, zipCode);
+                }
+            } catch (error) {
+                console.error("Error adding to favorites: ", error);
+            }
+        }
+
+        async function deleteFromFavorites() {
+            const zipCode = document.getElementById('zip_code').value;
+            const favId = document.getElementById('favorite_list').value;
+            try {
+                const rsp = await fetch('/favorites/' + favId, {
+                    method: 'DELETE'
+                });
+                if (!rsp.ok) {
+                    const data = await rsp.json()
+                    alert("Favorites API failed, API error message: " + data.error.message)
+                    throw new Error('Favorites API response was not 200, API error message: ' + data.error.message);
+                } else {
+                    const data = await loadFavorites();
+                    cachedFavorites = data;
+                    updateFavoritesDropdown(data);
+                    updateFavoritesUI(data, zipCode);
+                }
+            } catch (error) {
+                console.error("Error deleting from favorites: ", error);
+            }
+        }
+
+        function updateFavoritesDropdown(data) {
+            if (!data || data.length === 0) {
+                document.getElementById("favorite_list").innerHTML = `<option value="">No Favorites</option>`;
+            } else {
+                document.getElementById("favorite_list").innerHTML = data.map(fav => `<option value="${fav.id}">${fav.location}</option>`).join('');
+            }
+        }
+
+        async function onUnitChangeClicked() {
+            isFahrenheit = !isFahrenheit;
+            document.getElementById("unit_change").innerText = isFahrenheit ? "Switch To Celsius" : "Switch To Fahrenheit";
+            updateWeatherTable(cachedData)
+        }
+
+        function updateFavoritesUI(data, zipCode) {
+            const addFavoriteBtn = document.getElementById('add_favorite');
+            const deleteFavoriteBtn = document.getElementById('delete_favorite');
+            const dropdown = document.getElementById('favorite_list');
+
+            if (data.some(fav => fav.zip === zipCode)) {
+                addFavoriteBtn.disabled = true;
+                deleteFavoriteBtn.disabled = false;
+                dropdown.value = data.find(fav => fav.zip === zipCode).id;
+            } else {
+                addFavoriteBtn.disabled = false;
+                deleteFavoriteBtn.disabled = true;
+                dropdown.value = '';
+            }
+        }
+
+        function updateWeatherTable(data) {
+            // update title
+            document.getElementById("location").innerText = "Weather for " + data.location.name + ", " + data.location.region;
+
+            // update temperature
+            const currentTemp = isFahrenheit ? data.current.temp_f : data.current.temp_c;
+            const unit = isFahrenheit ? "°F" : "°C";
+            document.getElementById("temperature").innerText = currentTemp + " " + unit;
+
+            // update 3-day weather forecast
+            for (let i = 0; i < 3; i++) {
+                const forecastDay = data.forecast.forecastday[i];
+                const highTemp = isFahrenheit ? forecastDay.day.maxtemp_f : forecastDay.day.maxtemp_c;
+                const lowTemp = isFahrenheit ? forecastDay.day.mintemp_f : forecastDay.day.mintemp_c;
+                document.getElementById(`day${i + 1}_date`).innerText = forecastDay.date;
+                document.getElementById(`day${i + 1}_high`).innerText = highTemp + " " + unit;
+                document.getElementById(`day${i + 1}_low`).innerText = lowTemp + " " + unit;
+                document.getElementById(`day${i + 1}_condition`).innerText = forecastDay.day.condition.text;
+            }
+
+            // enable unit switch button
+            document.getElementById('unit_change').disabled = false;
+        }
+
+        function validateZipCode(zipCode) {
+            const zipCodePattern = /^\d{5}(-\d{4})?$/;
+            return zipCodePattern.test(zipCode);
+        }
+
+        function resetWeatherDisplay() {
+            document.getElementById("location").innerText = "Weather";
+            document.getElementById("temperature").innerText = "";
+            for (let i = 0; i < 3; i++) {
+                document.getElementById(`day${i + 1}_date`).innerText = "-";
+                document.getElementById(`day${i + 1}_high`).innerText = "-";
+                document.getElementById(`day${i + 1}_low`).innerText = "-";
+                document.getElementById(`day${i + 1}_condition`).innerText = "-";
+            }
+            document.getElementById('unit_change').disabled = true;
+        }
+    </script>
+</head>
+<body>
+    <div>Enter a zip code</div>
+    <div style="display: flex; align-items: center; gap: 5px;"><input id="zip_code"></input><button id="forecast_button" onclick="onGetForcastClicked()">Get Forcast</button></div>
+    <div><h2 id="location">Weather</h2></div>
+    <div><button id="add_favorite" disabled>Add to Favorites</button> Go to favorites: <select id="favourite_list" style="width: 150px;"></select> <button id="delete_favorite" disabled>Delete Favorite</button></div>
+    <div>Current Temperature</div>
+    <div><h3 id="temperature"></h3></div>
+    <div><button id="unit_change" onclick="onUnitChangeClicked()" disabled>Switch To Celcius</button></div>
+    <br>
+    <div>3 day forcast</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Day</th>
+                <th>High</th>
+                <th>Low</th>
+                <th>Condition</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="day1">
+                <th id="day1_date">-</th>
+                <th id="day1_high">-</th>
+                <th id="day1_low">-</th>
+                <th id="day1_condition">-</th>
+            </tr>
+            <tr id="day2">
+                <th id="day2_date">-</th>
+                <th id="day2_high">-</th>
+                <th id="day2_low">-</th>
+                <th id="day2_condition">-</th>
+            </tr>
+            <tr id="day3">
+                <th id="day3_date">-</th>
+                <th id="day3_high">-</th>
+                <th id="day3_low">-</th>
+                <th id="day3_condition">-</th>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,84 @@
+.favorite-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 17px;
+    margin-bottom: 42px;
+}
+
+.add-favorite-btn {
+    width: 146px;
+    height: 40px;
+    flex-shrink: 0;
+    background-color: #024878;
+    color: #FFFFFF;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.add-favorite-btn:disabled {
+    width: 146px;
+    height: 40px;
+    flex-shrink: 0;
+    background-color: #024878;
+    color: #888;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    cursor: not-allowed;
+}
+
+.favorite-title {
+    color: #0c0c0c;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.favorite-select {
+    width: 235px;
+    height: 35px;
+    border: 1px solid #000;
+    color: #ffffff;
+    font-family: Inter;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding-left: 16px;
+    background-color: #024878;
+}
+
+.delete-favorite-btn {
+    width: 146px;
+    height: 40px;
+    flex-shrink: 0;
+    background-color: #024878;
+    color: #FFFFFF;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.delete-favorite-btn:disabled {
+    width: 146px;
+    height: 40px;
+    flex-shrink: 0;
+    background-color: #024878;
+    color: #888;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    cursor: not-allowed;
+}
